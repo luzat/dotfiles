@@ -1,0 +1,37 @@
+[user]
+	name = Thomas Luzat
+	email = thomas@luzat.com
+	signingkey = 8773D4FF7B97608C!
+[color]
+	ui = true
+[merge]
+	tool = kdiff3
+	renamelimit = 16384
+[diff]
+	tool = kdiff3
+[core]
+	eol = lf
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+[credential]
+	helper = cache --timeout=3600
+[url "ssh://luzat@review.typo3.org:29418"]
+	pushInsteadOf = git://git.typo3.org
+[branch]
+	autosetuprebase = remote
+[push]
+	default = simple
+[alias]
+	lg = log --color --graph \n  --pretty=format:'%Cred%h%Creset \n  -%C(yellow)%d%Creset %s %Cgreen(%cr) \n  %C(bold blue)<%an>%Creset' \n  --abbrev-commit
+	permission-reset = !git diff -p -R --no-color | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	gpgsign = true
+[pager]
+	branch = false
+[init]
+	defaultBranch = main

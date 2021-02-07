@@ -1,0 +1,11 @@
+.gnupg/gpg-agent.conf
+.gnupg/gpg.conf
+.gnupg/openpgp-revocs.d/*.rev
+.gnupg/private-keys-v1.d/*.key
+.gnupg/pubring.kbx
+.gnupg/trustdb.gpg
+.ssh/authorized_keys
+.ssh/config
+.ssh/id_ed25519
+.ssh/id_ed25519.git
+.ssh/*.pub 

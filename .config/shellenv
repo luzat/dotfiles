@@ -1,0 +1,62 @@
+# Environment for bash and zsh, sourced by .bash_profile and .zshenv
+
+# File mask
+umask 022
+
+# Paths
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export OPT_PATH="$HOME/.local/opt"
+
+# User info
+export NAME="Thomas Luzat"
+export EMAIL="thomas@luzat.com"
+
+# Debian tools
+export DEBNAME="$NAME"
+export DEBFULLNAME="$NAME"
+export DEBEMAIL="$EMAIL"
+
+# Git
+export GIT_COMMITTER_NAME="$NAME"
+export GIT_COMMITTER_EMAIL="$EMAIL"
+export GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME"
+export GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+
+# Various program options
+export XZ_OPT="-T0 -9"
+export LESS="-FRX"
+export PYGMENTIZE_OPTS="-O style=monokai -f console256"
+export BAT_THEME="Monokai Extended"
+
+# tmux
+[[ -n "$TMPDIR" ]] && export TMUX_TMPDIR="$TMPDIR"
+
+# Format file timestamps
+# https://www.gnu.org/software/coreutils/manual/html_node/Formatting-file-timestamps.html
+# posix-long-iso is not supported by exa
+export TIME_STYLE="long-iso"
+
+# Use KDE file dialogs in GTK
+# Diabled because of performance issues
+#export GTK_USE_PORTAL=1
+
+# Preferred tools
+for editor in nvim vim gvim vi; do
+    if command -v "$editor" > /dev/null; then
+        export EDITOR="$editor"
+        export VISUAL="$EDITOR"
+        break
+    fi
+done
+
+command -v less > /dev/null && export PAGER="less"
+
+# Rust/Cargo
+# https://doc.rust-lang.org/cargo/getting-started/installation.html
+export CARGO_NAME="$NAME"
+export CARGO_EMAIL="$EMAIL"
+PATH="$HOME/.cargo/bin:$PATH"
+
+# User paths, Dart/Flutter
+PATH="$HOME/.local/bin:$HOME/bin:$OPT_PATH/flutter/bin:$PATH"
+
