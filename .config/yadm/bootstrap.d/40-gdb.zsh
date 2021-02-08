@@ -12,7 +12,8 @@ fi
 
 if read -q "choice?pwndbg: Run setup.sh (y/n)? "; then
     echo
-    "$OPT_PATH/pwndbg/setup.sh"
+    cd "$OPT_PATH/pwndbg"
+    ./setup.sh
 else
     echo
     echo "pwndbg: Skipping setup."
