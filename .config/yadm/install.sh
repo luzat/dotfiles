@@ -4,6 +4,15 @@ set -eu
 
 OPT_PATH="$HOME/.local/opt"
 
+if [ -d ~/.yadm ]; then
+    echo -n "Remove old ~/.yadm (y/n)? "
+    read choice
+
+    if [ "$choice" != "${choice#[Yy]}" ]; then
+        rm -rf ~/.yadm 
+    fi
+fi
+
 mkdir -p ~/.local/bin "$OPT_PATH"
 
 PATH="$HOME/.local/bin:$PATH"
