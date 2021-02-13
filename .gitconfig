@@ -9,6 +9,7 @@
 	renamelimit = 16384
 [diff]
 	tool = kdiff3
+	colorMoved = zebra
 [core]
 	eol = lf
 	autocrlf = input
@@ -35,3 +36,6 @@
 	branch = false
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
+
