@@ -57,6 +57,9 @@ export CARGO_NAME="$NAME"
 export CARGO_EMAIL="$EMAIL"
 PATH="$HOME/.cargo/bin:$PATH"
 
+# NodeJS: fnm
+[[ -v "$FNM_MULTISHELL_PATH" ]] && [[ -d "$HOME/.fnm/aliases/default/bin" ]] || PATH="$HOME/.fnm/aliases/default/bin:$PATH"
+
 # User paths, Dart/Flutter
 PATH="$HOME/.local/bin:$HOME/bin:$OPT_PATH/flutter/bin:$PATH"
 
