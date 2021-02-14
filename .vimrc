@@ -1,9 +1,10 @@
-" do not reconfigure Vim
+" Do not reconfigure Vim
 if v:progname =~? "evim"
   finish
 endif
 
-set nocompatible " use Vim settings
+" Use Vim settings
+set nocompatible 
 
 " vim-plug: https://github.com/junegunn/vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -141,7 +142,8 @@ if has('mouse_sgr')
   set ttymouse=sgr
 endif
 
-filetype plugin indent on " filetype detection and plugin loading
+" Turn on file type detection, plugin loading and indentation
+filetype plugin indent on
 
 set tabstop=4
 set shiftwidth=4
