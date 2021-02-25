@@ -166,16 +166,20 @@ fi
 # Initialize Oh My Zsh
 source "$ZSH/oh-my-zsh.sh"
 
-# Prompt setup
+# Prompt setup: Patch agnoster prompt
 prompt_status() {
   local symbols
-  symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL✘"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}\U0001f4a3"
-  JOBCOUNT=$(jobs -l | wc -l)
-  [[ $JOBCOUNT -gt 0 ]] && symbols+="%{%F{cyan}%}%(1j.%j.)⚙"
 
-  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+  # Patched: Include history event number
+  symbols+="%!"
+  # Patched: include $RETVAL
+  [[ $RETVAL -ne 0 ]] && symbols+=" %{%F{red}%}$RETVAL✘"
+  # Patched: include job count and reverse order
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+=" %{%F{cyan}%}%(1j.%j.)⚙"
+  [[ $UID -eq 0 ]] && symbols+=" %{%F{yellow}%}⚡"
+
+  # Changed background color
+  [[ -n "$symbols" ]] && prompt_segment '#232526' default "$symbols"
 }
 
 # History
