@@ -176,10 +176,19 @@ prompt_status() {
   [[ $RETVAL -ne 0 ]] && symbols+=" %{%F{red}%}$RETVAL✘"
   # Patched: include job count and reverse order
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+=" %{%F{cyan}%}%(1j.%j.)⚙"
-  [[ $UID -eq 0 ]] && symbols+=" %{%F{yellow}%}⚡"
 
   # Changed background color
   [[ -n "$symbols" ]] && prompt_segment '#232526' default "$symbols"
+}
+
+prompt_context() {
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    if [[ $UID -eq 0 ]]; then
+        prompt_segment '#232526' default "%(!.%{%F{yellow}%}.)⚡%n@%m"
+    else
+        prompt_segment '#232526' default "%(!.%{%F{yellow}%}.)%n@%m"
+    fi
+  fi
 }
 
 # History
