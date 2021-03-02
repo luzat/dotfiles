@@ -327,6 +327,13 @@ setup_fzf() {
 
 setup_fzf
 
+# Offload applications to NVIDIA graphics
+# https://download.nvidia.com/XFree86/Linux-x86_64/460.56/README/primerenderoffload.html
+# https://wiki.debian.org/NVIDIA%20Optimus#Using_NVIDIA_PRIME_Render_Offload
+nvoff() {
+  __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"
+}
+
 # Hack: Set up X11 authorization on terminals missing $XAUTHORITY
 (( ! ${+XAUTHORITY} )) && [[ -f ~/.Xauthority ]] && export XAUTHORITY=~/.Xauthority
 
