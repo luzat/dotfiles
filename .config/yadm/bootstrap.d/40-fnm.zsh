@@ -2,7 +2,12 @@
 
 set -eu
 
-if { ! (( $+commands[fnm] )) || [[ -x ~/.cargo/bin/fnm ]] } && (( $+commands[cargo] )); then
+if [[ "$YADM_CLASS" != "workstation" ]]; then
+    exit 0
+fi
+
+if { ! (( $+commands[fnm] )) || [[ -x ~/.cargo/bin/fnm ]] } && (( $+commands[cargo] ));
+then
     cargo install fnm
     fnm=~/.cargo/bin/fnm
 else

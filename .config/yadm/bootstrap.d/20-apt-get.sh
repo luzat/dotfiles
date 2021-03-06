@@ -3,7 +3,19 @@
 set -eu
 
 if command -v apt-get > /dev/null; then
-    packages="bat cargo chroma command-not-found direnv exa fasd fzf git htop mc mediainfo neovim plocate ranger ripgrep tmux ugrep zsh"
+    packages=""
+
+    if [ "workstation" = "$YADM_CLASS" ] || [ "client" = "$YADM_CLASS" ]; then
+        packages="fzf git htop mc neovim tmux zsh"
+    fi
+
+    if [ "workstation" = "$YADM_CLASS" ]; then
+        packages="$packages bat cargo chroma command-not-found direnv exa fasd mediainfo plocate ranger ripgrep ugrep"
+    fi
+
+    if [ -z "$packages" ]; then
+        exit 0
+    fi
 
     if [ "$(id -u)" -eq 0 ]; then
         echo "apt-get: Packages: $packages"
@@ -20,7 +32,9 @@ if command -v apt-get > /dev/null; then
     read choice
 
     if [ "$choice" != "${choice#[Yy]}" ]; then
-        $install_cmd $packages
+        for package in $packages; do
+            dpkg -s "$package" > /dev/null 2>&1 || $install_cmd "$package" || true
+        done
     else
         echo
         echo "apt-get: Skipping installation."

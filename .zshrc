@@ -1,5 +1,8 @@
 # Oh My Zsh configration
 ZSH="$OPT_PATH/ohmyzsh"
+
+[[ -d "$ZSH" ]] || return
+
 ZSH_THEME="agnoster"
 DEFAULT_USER="tom"
 CASE_SENSITIVE="true"

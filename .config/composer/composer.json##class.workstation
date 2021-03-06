@@ -1,0 +1,6 @@
+{
+    "require": {
+        "squizlabs/php_codesniffer": "*",
+        "n98/magerun2-dist": "^4.5"
+    }
+}

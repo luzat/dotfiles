@@ -36,11 +36,39 @@ else
     yadm remote set-url origin --push git@github.com:luzat/dotfiles.git
 fi
 
-echo -n "Decrypt files (y/n)? "
-read choice
+yadm_class="$(yadm config local.class)"
 
-if [ "$choice" != "${choice#[Yy]}" ]; then
-    yadm decrypt
+if [ -z "$(yadm config local.class)" ]; then
+    if [ "golemxiv" = "$HOST" ] || [ "wopr" = "$HOST" ]; then
+        yadm_class="workstation"
+    else
+        echo "Workstation: EverythingInstall everything"
+        echo "Client:      No development tools, less packages"
+        echo "Minimal:     Minimal working setup"
+        echo -n "Machine class workstation (w), client (c) or minimal (m)?"
+        read choice
+
+        if [ "$choice" != "${choice#[Ww]}" ]; then
+            yadm_class="workstation"
+        elif [ "$choice" != "${choice#[Cc]}" ]; then
+            yadm_class="client"
+        else
+            yadm_class="minimal"
+        fi
+    fi
+
+    yadm config local.class "$yadm_class"
+fi
+
+yadm alt
+
+if [ "workstation" = "$yadm_class" ]; then
+    echo -n "Decrypt files (y/n)? "
+    read choice
+
+    if [ "$choice" != "${choice#[Yy]}" ]; then
+        yadm decrypt
+    fi
 fi
 
 echo -n "Bootstrap (y/n)? "

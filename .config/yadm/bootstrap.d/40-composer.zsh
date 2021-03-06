@@ -9,3 +9,7 @@ chmod +x "$target.tmp"
 rm -f "$target"
 mv "$target.tmp" "$target"
 
+if (( $+commands[php] )) && [[ -e ~/.config/composer/composer.json ]]; then
+    composer global install
+fi
+
