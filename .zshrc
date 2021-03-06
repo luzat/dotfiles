@@ -293,7 +293,9 @@ setup_fzf() {
     elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
         # Debian package
         source /usr/share/doc/fzf/examples/key-bindings.zsh
-        source /usr/share/doc/fzf/examples/completion.zsh
+        
+        # Missing for older versions
+        [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
     fi
 
     if (( $+commands[fzf] )); then
