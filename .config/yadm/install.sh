@@ -43,10 +43,10 @@ if [ -z "$(yadm config local.class)" ]; then
     if [ "golemxiv" = "$hostname" ] || [ "wopr" = "$hostname" ]; then
         yadm_class="workstation"
     else
-        echo "Workstation: EverythingInstall everything"
+        echo "Workstation: Install everything"
         echo "Client:      No development tools, less packages"
         echo "Minimal:     Minimal working setup"
-        echo -n "Machine class workstation (w), client (c) or minimal (m)?"
+        echo -n "Machine class workstation (w), client (c) or minimal (m)? "
         read choice
 
         if [ "$choice" != "${choice#[Ww]}" ]; then
