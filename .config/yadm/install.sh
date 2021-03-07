@@ -37,9 +37,10 @@ else
 fi
 
 yadm_class="$(yadm config local.class)"
+hostname="$(hostname)"
 
 if [ -z "$(yadm config local.class)" ]; then
-    if [ "golemxiv" = "$HOST" ] || [ "wopr" = "$HOST" ]; then
+    if [ "golemxiv" = "$hostname" ] || [ "wopr" = "$hostname" ]; then
         yadm_class="workstation"
     else
         echo "Workstation: EverythingInstall everything"
