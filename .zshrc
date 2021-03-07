@@ -39,6 +39,7 @@ done
 (( $+commands[rg] )) && plugins+="ripgrep"
 (( $+commands[rustc] )) && plugins+="rust"
 (( $+commands[systemctl] )) && plugins+="systemd"
+(( $+commands[wp] )) && plugins+="wp-cli"
 
 if (( $+commands[chroma] )); then
     ZSH_COLORIZE_TOOL="chroma"
