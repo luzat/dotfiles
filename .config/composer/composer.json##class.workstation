@@ -4,6 +4,10 @@
     "require": {
         "squizlabs/php_codesniffer": "*",
         "n98/magerun2-dist": "^4.5",
-        "wp-cli/wp-cli-bundle": "^2.4"
+        "wp-cli/wp-cli-bundle": "^2.4",
+        "phpstan/phpstan": "^0.12.80",
+        "vimeo/psalm": "^4.6",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpmd/phpmd": "^2.9"
     }
 }
