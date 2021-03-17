@@ -6,6 +6,6 @@
 .gnupg/trustdb.gpg
 .ssh/authorized_keys
 .ssh/config
-.ssh/id_ed25519
-.ssh/id_ed25519.git
+.ssh/id_*
 .ssh/*.pub 
+
