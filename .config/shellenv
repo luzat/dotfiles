@@ -27,6 +27,7 @@ export XZ_OPT="-T0 -9"
 export LESS="-FRX"
 export PYGMENTIZE_OPTS="-O style=monokai -f console256"
 export BAT_THEME="Monokai Extended"
+export PIPENV_VENV_IN_PROJECT="1"
 
 # tmux
 [[ -n "$TMPDIR" ]] && export TMUX_TMPDIR="$TMPDIR"

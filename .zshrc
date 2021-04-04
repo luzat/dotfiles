@@ -26,6 +26,7 @@ plugins=(
     fzf-tab
     magic-enter
     pip
+    pipenv
     symfony2
     vi-mode
     zsh-autosuggestions

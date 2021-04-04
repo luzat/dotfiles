@@ -10,7 +10,7 @@ if command -v apt-get > /dev/null; then
     fi
 
     if [ "workstation" = "$YADM_CLASS" ]; then
-        packages="$packages bat cargo chroma command-not-found direnv exa fasd mediainfo opensc-pkcs11 plocate ranger ripgrep scdaemon ugrep"
+        packages="$packages bat cargo chroma command-not-found direnv exa fasd mediainfo opensc-pkcs11 plocate python3-venv ranger ripgrep scdaemon ugrep"
     fi
 
     if [ -z "$packages" ]; then
