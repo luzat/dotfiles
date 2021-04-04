@@ -14,3 +14,11 @@ else
     git clone https://github.com/pyenv/pyenv.git "$target"
 fi
 
+target="$OPT_PATH/pyenv/plugins/pyenv-virtualenv"
+
+if [[ -d "$target" ]]; then
+    git -C "$target" pull > /dev/null
+else
+    git clone https://github.com/pyenv/pyenv-virtualenv.git "$target"
+fi
+

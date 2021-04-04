@@ -159,6 +159,10 @@ if [[ -d "$OPT_PATH/pyenv" ]]; then
     export PYENV_ROOT="$OPT_PATH/pyenv"
     path=("$PYENV_ROOT/bin" $path)
     eval "$(pyenv init - --no-rehash)"
+
+    if [[ -d "$OPT_PATH/pyenv/plugins/pyenv-virtualenv" ]]; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 # Ruby: rbenv
