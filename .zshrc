@@ -297,6 +297,8 @@ setup_ugrep
 setup_fzf() {
     if [[ -f "$XDG_CONFIG_HOME/fzf/fzf.zsh" ]]; then
         source "$XDG_CONFIG_HOME/fzf/fzf.zsh"
+        # Move path to front
+        path=("$OPT_PATH/fzf/bin" $path)
     elif [[ -f ~/.fzf.zsh ]]; then
         source ~/.fzf.zsh
     elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
