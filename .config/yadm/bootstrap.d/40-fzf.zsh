@@ -11,7 +11,7 @@ fzf_install() {
 if [[ -d "$target" ]]; then
     git -C "$target" pull > /dev/null
     fzf_install
-elif ! (( $+commands[fzf] )); then
+elif ! (( $+commands[fzf] )) || [[ "$(command fzf --version)" =~ "^0.1" ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git "$target"
     fzf_install
 fi
