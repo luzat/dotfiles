@@ -14,6 +14,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 ZSH_HIGHLIGHT_MAXLENGTH=1024
+VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Oh My Zsh plugins
 plugins=(
@@ -76,7 +77,7 @@ if (( ! ${+LESSOPEN} )); then
 fi
 
 # GnuPG
-if (( $+commands[gpgconf] )); then 
+if (( $+commands[gpgconf] )); then
     AGENT_SOCK="$(gpgconf --list-dirs | grep agent-socket | cut -d : -f 2)"
 
     if (( $+commands[gpg-agent] )) && [[ ! -S "$AGENT_SOCK" ]]; then
@@ -136,7 +137,7 @@ if (( $+commands[fnm] )); then
         local fnm_error="$(fnm use "$version" 2>&1 > /dev/null)"
 
         if (( ${#fnm_error} )) && [[ "$fnm_error" != "$FNM_PREVIOUS_ERROR" && "$version" != "default" ]]; then
-            echo "fnm/node: $fnm_error" 1>&2 
+            echo "fnm/node: $fnm_error" 1>&2
         fi
 
         FNM_PREVIOUS_ERROR="$fnm_error"
@@ -144,7 +145,7 @@ if (( $+commands[fnm] )); then
         local new="$(fnm current)"
 
         if [[ "$new" != "$current" ]]; then
-            echo "fnm/node: Switched to node $new" 
+            echo "fnm/node: Switched to node $new"
         fi
     }
 
@@ -155,7 +156,36 @@ fi
 
 (( $+commands[npm] )) && plugins+=(npm yarn)
 
-# Python: pyenv
+# Ruby: rbenv
+if [[ -d "$OPT_PATH/rbenv" ]]; then
+    path=("$OPT_PATH/rbenv/bin" $path)
+    eval "$(rbenv init - --no-rehash)"
+fi
+
+# Initialize Oh My Zsh
+source "$ZSH/oh-my-zsh.sh"
+
+# Python: pipenv, pyenv
+# Added --fancy option
+_togglePipenvShell() {
+   # deactivate shell if Pipfile doesn't exist and not in a subdir
+   if [[ ! -f "$PWD/Pipfile" ]]; then
+     if [[ "$PIPENV_ACTIVE" == 1 ]]; then
+       if [[ "$PWD" != "$pipfile_dir"* ]]; then
+         exit
+       fi
+     fi
+   fi
+
+   # activate the shell if Pipfile exists
+   if [[ "$PIPENV_ACTIVE" != 1 ]]; then
+     if [[ -f "$PWD/Pipfile" ]]; then
+       export pipfile_dir="$PWD"
+       pipenv shell --fancy
+    fi
+  fi
+}
+
 if [[ -d "$OPT_PATH/pyenv" ]]; then
     export PYENV_ROOT="$OPT_PATH/pyenv"
     path=("$PYENV_ROOT/bin" $path)
@@ -165,15 +195,6 @@ if [[ -d "$OPT_PATH/pyenv" ]]; then
         eval "$(pyenv virtualenv-init -)"
     fi
 fi
-
-# Ruby: rbenv
-if [[ -d "$OPT_PATH/rbenv" ]]; then
-    path=("$OPT_PATH/rbenv/bin" $path)
-    eval "$(rbenv init - --no-rehash)"
-fi
-
-# Initialize Oh My Zsh
-source "$ZSH/oh-my-zsh.sh"
 
 # Prompt setup: Patch agnoster prompt
 prompt_status() {
@@ -200,6 +221,14 @@ prompt_context() {
   fi
 }
 
+prompt_virtualenv () {
+    local virtualenv_path="$VIRTUAL_ENV"
+
+    if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
+       prompt_segment blue white $'\ue235'"`basename $virtualenv_path`"
+    fi
+}
+
 # History
 setopt histignorespace
 export HISTSIZE=50000
@@ -208,7 +237,7 @@ export SAVEHIST=50000
 # Vi mode
 export KEYTIMEOUT=1
 
-# Open command line in editor; vv doesn't work because of low KEYTIMEOUT 
+# Open command line in editor; vv doesn't work because of low KEYTIMEOUT
 bindkey -M vicmd '^v' edit-command-line
 
 # Menu selection: hjkl
@@ -304,7 +333,7 @@ setup_fzf() {
     elif [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
         # Debian package
         source /usr/share/doc/fzf/examples/key-bindings.zsh
-        
+
         # Missing for older versions
         [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
     fi
@@ -367,7 +396,7 @@ if (( $+commands[xdg-open] )); then
     for ext in csv doc docx md ods odt sql txt xls xlsx; do
         alias -s $ext="xdg-open"
     done
-fi 
+fi
 
 # Remove non-existing paths
 path=($^path(N-/))
