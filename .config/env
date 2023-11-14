@@ -1,0 +1,87 @@
+# Environment for bash and zsh, sourced by .bash_profile and .zshenv
+# Can be overwritten by local files in ~/.config/env.d
+
+# Define XDG paths
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Local software installations
+export OPT_PATH="$HOME/.local/opt"
+
+# User info
+export NAME="Thomas Luzat"
+export EMAIL="thomas@luzat.com"
+
+# Debian tools
+export DEBNAME="$NAME"
+export DEBFULLNAME="$NAME"
+export DEBEMAIL="$EMAIL"
+
+# Git
+export GIT_COMMITTER_NAME="$NAME"
+export GIT_COMMITTER_EMAIL="$EMAIL"
+export GIT_AUTHOR_NAME="$GIT_COMMITTER_NAME"
+export GIT_AUTHOR_EMAIL="$GIT_COMMITTER_EMAIL"
+
+# Various program options
+export XZ_OPT="-T0 -9"
+export LESS="-FRX"
+export PYGMENTIZE_OPTS="-O style=monokai -f console256"
+export BAT_STYLE="plain"
+export BAT_THEME="Monokai Extended"
+export PIPENV_VENV_IN_PROJECT="1"
+
+# tmux
+[[ -n "$TMPDIR" ]] && export TMUX_TMPDIR="$TMPDIR"
+
+# Format file timestamps
+# https://www.gnu.org/software/coreutils/manual/html_node/Formatting-file-timestamps.html
+# exa/eza do not support posix-long-iso
+export TIME_STYLE="long-iso"
+
+# Preferred tools, only check and set if interactive
+if [[ $- == *i* ]]; then
+    [[ -z "$EDITOR" || -z "$VISUAL" ]] && for editor in nvim vim vi; do
+        if command -v "$editor" > /dev/null; then
+            export EDITOR="${EDITOR:-editor}"
+            export VISUAL="${VISUAL:-editor}"
+            break
+        fi
+    done
+
+    [[ -z "$MANPAGER" ]] && command -v nvim > /dev/null && export MANPAGER="nvim +Man!"
+    [[ -z "$PAGER" ]] && command -v less > /dev/null && export PAGER="less"
+fi
+
+# Rust/Cargo
+# https://doc.rust-lang.org/cargo/getting-started/installation.html
+export CARGO_NAME="$NAME"
+export CARGO_EMAIL="$EMAIL"
+PATH="$HOME/.cargo/bin:$PATH"
+
+# Android SDK
+# https://developer.android.com/studio#downloads    
+# https://developer.android.com/tools/variables
+# Support for $ANDROID_USER_HOME is bad (2023)
+[[ -z "$ANDROID_HOME" && -d "$HOME/Android/Sdk" ]] && export ANDROID_HOME="$HOME/Android/Sdk"
+[[ -n "$ANDROID_HOME" ]] && PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# ESP-IDF             
+# https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/#installation-step-by-step
+[[ -z "$IDF_PATH" && -d "$OPT_PATH/esp-idf" ]] && export IDF_PATH="$OPT_PATH/esp-idf"
+[[ -n "$IDF_PATH" ]] && . "$IDF_PATH/export.sh" > /dev/null 2>&1
+
+# webOS SDK
+[[ -z "$LG_WEBOS_TV_SDK_HOME" && -d "$OPT_PATH/webOS_TV_SDK" ]] && export LG_WEBOS_TV_SDK_HOME="$OPT_PATH/webOS_TV_SDK"
+[[ -n "$LG_WEBOS_TV_SDK_HOME" ]] && export WEBOS_CLI_TV="$LG_WEBOS_TV_SDK_HOME/CLI/bin"
+[[ -n "$WEBOS_CLI_TV" ]] && PATH="$WEBOS_CLI_TV:$PATH"
+
+# Fly.io
+[[ -z "$FLYCTL_INSTALL" && -d "$HOME/.fly" ]] && export FLYCTL_INSTALL="$HOME/.fly"
+[[ -n "$FLYCTL_INSTALL" ]] && PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# Additional paths; missing paths will be removed later
+PATH="$HOME/.local/bin:$HOME/bin:$HOME/Applications:$HOME/.local/share/JetBrains/Toolbox/scripts:$XDG_CONFIG_HOME/composer/vendor/bin:/snap/bin:$PATH"
+

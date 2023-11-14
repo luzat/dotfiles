@@ -1,0 +1,6 @@
+set showmode
+set visualbell
+set ideastatusicon=gray
+set ideawrite=file
+set clipboard+=unnamed
+set ideajoin

@@ -1,0 +1,47 @@
+[user]
+	name = Thomas Luzat
+	email = thomas@luzat.com
+	signingKey = FFADAE0D31D11D29!
+[color]
+	ui = true
+[merge]
+	tool = code
+	renameLimit = 16384
+[mergetool "code"]
+    cmd = code --wait --merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+[diff]
+	tool = code
+	colorMoved = zebra
+[difftool "code"]
+    cmd = code --wait --diff \"$LOCAL\" \"$REMOTE\"
+[core]
+	eol = lf
+	autocrlf = input
+	excludesFile = ~/.gitignore_global
+    editor = code --wait
+[credential]
+	helper = cache --timeout=3600
+[url "ssh://luzat@review.typo3.org:29418"]
+	pushInsteadOf = git://git.typo3.org
+[branch]
+	autoSetupRebase = remote
+[push]
+	default = simple
+	autoSetupRemote = true
+[alias]
+	lg = log --color --graph \n  --pretty=format:'%Cred%h%Creset \n  -%C(yellow)%d%Creset %s %Cgreen(%cr) \n  %C(bold blue)<%an>%Creset' \n  --abbrev-commit
+	permissionReset = !git diff -p -R --no-color | grep -E \"^(diff|(old|new) mode)\" --color=never | git apply
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[commit]
+	gpgsign = true
+[pager]
+	branch = false
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+

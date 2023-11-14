@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -eu
+
+mkdir -p "$HOME/.local/opt" ~/.local/bin ~/.local/state/zsh ~/.ssh/control
+
+# Clean up zsh files
+if [[ -f ~/.zsh_history && ! -f ~/.local/state/zsh/history ]]; then
+    mv ~/.zsh_history ~/.local/state/zsh/history
+fi
+
+for f in ~/.zcompdump*; do
+    rm -f "$f"
+done
+
+# Clean up vim files
+rm -f ~/.vim/.netrwhist ~/.viminfo ~/.viminf*.tmp
+
+vi_variant=vim
+
+command -v nvim > /dev/null && vi_variant=nvim || vi_variant=vim
+mkdir -p ~/.local/state/$vi_variant
+
+for d in backup swap undo; do
+    [[ -d ~/.vim/$d && ! -d ~/.local/state/$vi_variant/$d ]] && mv ~/.vim/$d ~/.local/state/$vi_variant/
+done
+
