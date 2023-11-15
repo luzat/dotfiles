@@ -27,7 +27,8 @@ HISTFILE="$ZSH_STATE_DIR/history"
 }
 
 # Oh My Zsh configuration
-ZSH="$OPT_PATH/ohmyzsh"
+ZSH="{$XDG_DATA_HOME:-$HOME/.local/share}/oh-my-zsh"
+[[ -d "$ZSH" ]] || ZSH="$HOME/.local/opt/ohmyzsh"
 
 # Give up
 [[ -d "$ZSH" ]] || return
