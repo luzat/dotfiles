@@ -18,7 +18,6 @@
 	eol = lf
 	autocrlf = input
 	excludesFile = ~/.gitignore_global
-    editor = code --wait
 [credential]
 	helper = cache --timeout=3600
 [url "ssh://luzat@review.typo3.org:29418"]

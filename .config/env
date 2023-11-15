@@ -45,12 +45,13 @@ export TIME_STYLE="long-iso"
 if [[ $- == *i* ]]; then
     [[ -z "$EDITOR" || -z "$VISUAL" ]] && for editor in nvim vim vi; do
         if command -v "$editor" > /dev/null; then
-            export EDITOR="${EDITOR:-editor}"
-            export VISUAL="${VISUAL:-editor}"
+            export EDITOR="${EDITOR:-$editor}"
+            export VISUAL="${VISUAL:-$editor}"
             break
         fi
     done
 
+    unset editor
     [[ -z "$MANPAGER" ]] && command -v nvim > /dev/null && export MANPAGER="nvim +Man!"
     [[ -z "$PAGER" ]] && command -v less > /dev/null && export PAGER="less"
 fi
