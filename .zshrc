@@ -170,7 +170,17 @@ fpath+="$ZSH/custom/completions"
     reply=( ${(f)"$( zoxide query --list $1 2> /dev/null )"} )
 }
 
-bindkey "${terminfo[kcuu1]}" up-line-or-history
+() {
+   local -a prefix=( '\e'{\[,O} )
+   local -a up=( ${^prefix}A ) down=( ${^prefix}B )
+   local key=
+   for key in $up[@]; do
+      bindkey "$key" up-line-or-history
+   done
+   for key in $down[@]; do
+      bindkey "$key" down-line-or-history
+   done
+}
 
 # Python: pipenv, pyenv
 _pipenv() {
