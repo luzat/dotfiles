@@ -7,19 +7,19 @@ endif
 set nocompatible 
 
 " Configure paths
-if empty("$XDG_CACHE_HOME")
+if empty($XDG_CACHE_HOME)
   let $XDG_CACHE_HOME=$HOME . "/.cache"
 endif
 
-if empty("$XDG_CONFIG_HOME")
+if empty($XDG_CONFIG_HOME)
   let $XDG_CONFIG_HOME=$HOME . "/.config"
 endif
 
-if empty("$XDG_DATA_HOME")
+if empty($XDG_DATA_HOME)
   let $XDG_DATA_HOME=$HOME . "/.local/share"
 endif
 
-if empty("$XDG_STATE_HOME")
+if empty($XDG_STATE_HOME)
   let $XDG_STATE_HOME=$HOME . "/.local/state"
 endif
 
