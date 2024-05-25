@@ -157,7 +157,11 @@ set incsearch " incremental search
 set ignorecase " case-insensitive search
 set smartcase " except with capital letters
 
-set clipboard=unnamed
+if has("unnamedplus")
+    set clipboard=unnamedplus
+else
+    set clipboard=unnamed
+endif
 set ttyfast
 set visualbell " do not beep
 set display+=lastline " do not show @@@ in last line if truncated

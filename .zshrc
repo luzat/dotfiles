@@ -342,6 +342,9 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+="bracketed-paste"
     fi
 }
 
+# GitHub Copilot
+(( $+commands[gh] )) && [[ -d ~/.local/share/gh/extensions/gh-copilot ]] && eval "$(gh copilot alias -- zsh)"
+
 # fzf setup
 # https://github.com/junegunn/fzf
 # C-t: Select files/directories
@@ -378,12 +381,14 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+="bracketed-paste"
 
         # fzf-tab
         # https://github.com/Aloxaf/fzf-tab
-        zstyle ":completion:*:git-checkout:*" sort "false"
-        zstyle ':completion:*:descriptions' format "[%d]"
-        zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'fzf-preview.sh $realpath'
+        if (($plugins[(Ie)fzf-tab])); then
+            zstyle ":completion:*:git-checkout:*" sort "false"
+            zstyle ':completion:*:descriptions' format "[%d]"
+            zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+            zstyle ':fzf-tab:complete:cd:*' fzf-preview 'fzf-preview.sh $realpath'
 
-        enable-fzf-tab
+            enable-fzf-tab
+        fi
     fi
 }
 
